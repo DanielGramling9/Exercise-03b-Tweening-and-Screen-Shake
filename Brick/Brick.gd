@@ -11,7 +11,10 @@ export var time_s = 1.2
 export var time_v = 1.5
 
 func _ready():
-	position = new_position
+	position.x = new_position.x
+	position.y = -100
+	$Tween.interpolate_property(self, "position", position, new_position, 0.5 + randf()* 2, Tween.TRANS_BOUNCE, Tween.EASE_IN_OUT)
+	$Tween.start()
 	if score >= 100:
 		$ColorRect.color = Color8(224,49,49)
 	elif score >= 90:
@@ -43,3 +46,4 @@ func die():
 	Global.update_score(score)
 	get_parent().check_level()
 	$Confetti.emitting = true
+	$Tween.interpolate_property(self, "position", Vector2(position.x, 1000),time_fall, Tween.TRANS_EXPO, Tween.EASE_IN)
